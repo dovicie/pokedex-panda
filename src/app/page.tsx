@@ -17,6 +17,7 @@ export default function Home() {
           py: "4",
         })}
       >
+        {/* 型安全に書けるけど、結局keyは安全だけど、valueは安全じゃない？？ TailwindCSSだと型はないけど、拡張機能で知らせてくれる */}
         <h1 className={css({ fontWeight: "bold", color: "slate.700" })}>
           ポケモン図鑑
         </h1>
@@ -71,6 +72,8 @@ const Card = ({
   types: string[];
 }) => {
   return (
+    // patternsをfunctionではなくJSXでやってみる。 こっちのほうがスッキリ見えていいかも
+    // でもJSXだと、すべてがdiv要素になっちゃう？？
     <Box bgColor="white" padding={2} width={200} rounded="md">
       <AspectRatio ratio={1 / 1} width="full" bgColor="blue.400"></AspectRatio>
       <div
@@ -81,6 +84,7 @@ const Card = ({
           textAlign: "left",
         })}
       >
+        {/* JSXで表現しにくいやつがあって、結局JSXとfunctionが混同する。Boxにするとすべてdivになるし */}
         <span>{no}</span>
         <span>{name}</span>
         <Wrap gap={1}>
