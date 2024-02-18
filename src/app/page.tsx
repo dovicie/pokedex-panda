@@ -37,24 +37,24 @@ type QueryResult = {
 };
 
 type PokemonType =
-  | "normal"
-  | "grass"
-  | "fire"
-  | "water"
-  | "electric"
-  | "psychic"
-  | "ice"
-  | "fighting"
-  | "poison"
-  | "ground"
-  | "flying"
-  | "bug"
-  | "rock"
-  | "ghost"
-  | "dragon"
-  | "dark"
-  | "steel"
-  | "fairy";
+  | "Normal"
+  | "Grass"
+  | "Fire"
+  | "Water"
+  | "Electric"
+  | "Psychic"
+  | "Ice"
+  | "Fighting"
+  | "Poison"
+  | "Ground"
+  | "Flying"
+  | "Bug"
+  | "Rock"
+  | "Ghost"
+  | "Dragon"
+  | "Dark"
+  | "Steel"
+  | "Fairy";
 
 export default async function Home() {
   const result: QueryResult = await getClient().query(PokemonsQuery, {});
@@ -182,75 +182,75 @@ const typeLabel = cva({
   },
   variants: {
     type: {
-      normal: {
+      Normal: {
         bgColor: "slate.200",
         color: "black",
       },
-      grass: {
+      Grass: {
         bgColor: "green.600",
         color: "white",
       },
-      fire: {
+      Fire: {
         bgColor: "orange.500",
         color: "white",
       },
-      water: {
+      Water: {
         bgColor: "blue.500",
         color: "white",
       },
-      electric: {
+      Electric: {
         bgColor: "yellow.500",
         color: "black",
       },
-      psychic: {
+      Psychic: {
         bgColor: "purple.500",
         color: "white",
       },
-      ice: {
+      Ice: {
         bgColor: "cyan.500",
         color: "black",
       },
-      fighting: {
+      Fighting: {
         bgColor: "red.500",
         color: "white",
       },
-      poison: {
+      Poison: {
         bgColor: "purple.700",
         color: "white",
       },
-      ground: {
+      Ground: {
         bgColor: "yellow.700",
         color: "white",
       },
-      flying: {
+      Flying: {
         bgColor: "blue.200",
         color: "black",
       },
-      bug: {
+      Bug: {
         bgColor: "green.500",
         color: "white",
       },
-      rock: {
+      Rock: {
         bgColor: "gray.700",
         color: "white",
       },
-      ghost: {
+      Ghost: {
         bgColor: "indigo.500",
         color: "white",
       },
-      dragon: {
+      Dragon: {
         bgColor: "purple.900",
         color: "white",
       },
-      dark: {
+      Dark: {
         bgColor: "gray.800",
         color: "white",
       },
-      steel: {
+      Steel: {
         bgColor: "gray.500",
         color: "black",
       },
-      fairy: {
+      Fairy: {
         bgColor: "pink.500",
         color: "black",
       },
