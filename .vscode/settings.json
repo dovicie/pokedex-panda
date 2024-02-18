@@ -1,3 +1,11 @@
 {
-  "cSpell.words": ["codegen", "hstack", "pandacss", "pokedex"]
+  "cSpell.words": [
+    "codegen",
+    "hstack",
+    "pandacss",
+    "pokedex",
+    "pokemondb",
+    "pokemons",
+    "urql"
+  ]
 }

@@ -1,15 +1,63 @@
 import { css, cva } from "../../styled-system/css";
 import { container, hstack, wrap } from "../../styled-system/patterns";
-import {
-  AspectRatio,
-  Box,
-  Container,
-  VStack,
-  Wrap,
-  styled,
-} from "../../styled-system/jsx";
+import { AspectRatio, VStack, Wrap } from "../../styled-system/jsx";
+import { gql } from "@urql/core";
+import { registerUrql } from "@urql/next/rsc";
+import Image from "next/image";
+import { urqlClient } from "@/lib/graphql";
 
-export default function Home() {
+const PokemonsQuery = gql`
+  query Pokemons {
+    pokemons(first: 151) {
+      id
+      number
+      name
+      types
+      image
+    }
+  }
+`;
+
+const { getClient } = registerUrql(urqlClient);
+
+type Pokemon = {
+  id: string;
+  number: string;
+  name: string;
+  types: PokemonType[];
+  image: string;
+};
+
+type QueryResult = {
+  data?: {
+    pokemons: Pokemon[];
+  };
+  error?: any;
+  extensions?: any;
+};
+
+type PokemonType =
+  | "normal"
+  | "grass"
+  | "fire"
+  | "water"
+  | "electric"
+  | "psychic"
+  | "ice"
+  | "fighting"
+  | "poison"
+  | "ground"
+  | "flying"
+  | "bug"
+  | "rock"
+  | "ghost"
+  | "dragon"
+  | "dark"
+  | "steel"
+  | "fairy";
+
+export default async function Home() {
+  const result: QueryResult = await getClient().query(PokemonsQuery, {});
   return (
     <div>
       <header
@@ -53,9 +101,15 @@ export default function Home() {
           </button>
         </div>
         <div className={wrap({ gap: "6", py: "4", justify: "center" })}>
-          <Card name="フシギダネ" no="0001" types={["くさ", "どく"]} />
-          <Card name="フシギバナ" no="0002" types={["くさ", "どく"]} />
-          <Card name="フシギソウ" no="0003" types={["くさ", "どく"]} />
+          {result.data?.pokemons.map((pokemon: Pokemon) => (
+            <Card
+              key={pokemon.id}
+              image={pokemon.image}
+              name={pokemon.name}
+              no={pokemon.number}
+              types={pokemon.types}
+            />
+          ))}
         </div>
       </main>
     </div>
@@ -63,13 +117,15 @@ export default function Home() {
 }
 
 const Card = ({
+  image,
   name,
   no,
   types,
 }: {
+  image: string;
   name: string;
   no: string;
-  types: string[];
+  types: PokemonType[];
 }) => {
   return (
     // patternsをfunctionではなくJSXでやってみる。 こっちのほうがスッキリ見えていいかも
@@ -83,7 +139,15 @@ const Card = ({
       width={200}
       rounded="md"
     >
-      <AspectRatio ratio={1 / 1} width="full" bgColor="blue.400"></AspectRatio>
+      <AspectRatio ratio={1 / 1} width="full">
+        <Image
+          className={css({ objectFit: "contain" })}
+          src={image}
+          fill
+          sizes="(max-width: 425px) 100vw, (max-width: 610px) 50vw, (max-width: 800px) 33vw, 25vw"
+          alt=""
+        />
+      </AspectRatio>
       {/* JSXで表現しにくいやつがあって、結局JSXとfunctionが混同する。Boxにするとすべてdivになるし */}
       <span className={css({ color: "slate.400", fontSize: "sm" })}>#{no}</span>
       <span>{name}</span>
@@ -95,7 +159,7 @@ const Card = ({
             <span
               key={index}
               className={typeLabel({
-                type: "grass",
+                type: type,
               })}
             >
               {type}
