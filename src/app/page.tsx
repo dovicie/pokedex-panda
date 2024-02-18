@@ -74,41 +74,122 @@ const Card = ({
   return (
     // patternsをfunctionではなくJSXでやってみる。 こっちのほうがスッキリ見えていいかも
     // でもJSXだと、すべてがdiv要素になっちゃう？？
-    <Box bgColor="white" padding={2} width={200} rounded="md">
+
+    <VStack
+      alignItems="start"
+      gap={1}
+      bgColor="white"
+      padding={2}
+      width={200}
+      rounded="md"
+    >
       <AspectRatio ratio={1 / 1} width="full" bgColor="blue.400"></AspectRatio>
-      <div
-        className={css({
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "start",
-          textAlign: "left",
+      {/* JSXで表現しにくいやつがあって、結局JSXとfunctionが混同する。Boxにするとすべてdivになるし */}
+      <span className={css({ color: "slate.400", fontSize: "sm" })}>#{no}</span>
+      <span>{name}</span>
+      <Wrap gap={1}>
+        {types.map((type, index) => {
+          // タイプラベルの色をタイプによって動的に変えたいので、Recipeで表現
+          // 慣れもあるけどコンポーネントで書いたほうが、明示的な気がする。
+          return (
+            <span
+              key={index}
+              className={typeLabel({
+                type: "grass",
+              })}
+            >
+              {type}
+            </span>
+          );
         })}
-      >
-        {/* JSXで表現しにくいやつがあって、結局JSXとfunctionが混同する。Boxにするとすべてdivになるし */}
-        <span>{no}</span>
-        <span>{name}</span>
-        <Wrap gap={1}>
-          {types.map((type, index) => {
-            return (
-              <span
-                key={index}
-                className={css({
-                  bgColor: "green.600",
-                  color: "white",
-                  width: "16",
-                  fontSize: "xs",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  rounded: "sm",
-                })}
-              >
-                {type}
-              </span>
-            );
-          })}
-        </Wrap>
-      </div>
-    </Box>
+      </Wrap>
+    </VStack>
   );
 };
+
+const typeLabel = cva({
+  base: {
+    width: "16",
+    fontSize: "xs",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    rounded: "sm",
+  },
+  variants: {
+    type: {
+      normal: {
+        bgColor: "slate.200",
+        color: "black",
+      },
+      grass: {
+        bgColor: "green.600",
+        color: "white",
+      },
+      fire: {
+        bgColor: "orange.500",
+        color: "white",
+      },
+      water: {
+        bgColor: "blue.500",
+        color: "white",
+      },
+      electric: {
+        bgColor: "yellow.500",
+        color: "black",
+      },
+      psychic: {
+        bgColor: "purple.500",
+        color: "white",
+      },
+      ice: {
+        bgColor: "cyan.500",
+        color: "black",
+      },
+      fighting: {
+        bgColor: "red.500",
+        color: "white",
+      },
+      poison: {
+        bgColor: "purple.700",
+        color: "white",
+      },
+      ground: {
+        bgColor: "yellow.700",
+        color: "white",
+      },
+      flying: {
+        bgColor: "blue.200",
+        color: "black",
+      },
+      bug: {
+        bgColor: "green.500",
+        color: "white",
+      },
+      rock: {
+        bgColor: "gray.700",
+        color: "white",
+      },
+      ghost: {
+        bgColor: "indigo.500",
+        color: "white",
+      },
+      dragon: {
+        bgColor: "purple.900",
+        color: "white",
+      },
+      dark: {
+        bgColor: "gray.800",
+        color: "white",
+      },
+      steel: {
+        bgColor: "gray.500",
+        color: "black",
+      },
+      fairy: {
+        bgColor: "pink.500",
+        color: "black",
+      },
+    },
+  },
+});
