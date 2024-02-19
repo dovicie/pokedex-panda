@@ -1,6 +1,6 @@
 import { css, cva } from "../../styled-system/css";
 import { container, hstack, wrap } from "../../styled-system/patterns";
-import { AspectRatio, VStack, Wrap } from "../../styled-system/jsx";
+import { VStack, Wrap } from "../../styled-system/jsx";
 import { gql } from "@urql/core";
 import { registerUrql } from "@urql/next/rsc";
 import Image from "next/image";
@@ -139,7 +139,15 @@ const Card = ({
       width={200}
       rounded="md"
     >
-      <AspectRatio ratio={1 / 1} width="full">
+      {/* AspectRatioのパターンを使うと、img要素にobjectFit:"cover" が優先されて、"contain"があたらない */}
+      {/* TODO:パターンで表現できたらしたい */}
+      <div
+        className={css({
+          aspectRatio: "square",
+          position: "relative",
+          width: "full",
+        })}
+      >
         <Image
           className={css({ objectFit: "contain" })}
           src={image}
@@ -147,7 +155,7 @@ const Card = ({
           sizes="(max-width: 425px) 100vw, (max-width: 610px) 50vw, (max-width: 800px) 33vw, 25vw"
           alt=""
         />
-      </AspectRatio>
+      </div>
       {/* JSXで表現しにくいやつがあって、結局JSXとfunctionが混同する。Boxにするとすべてdivになるし */}
       <span className={css({ color: "slate.400", fontSize: "sm" })}>#{no}</span>
       <span>{name}</span>
